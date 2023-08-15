@@ -3,7 +3,6 @@ import { useSelector } from "react-redux";
 import { selectData } from "../pages/homeSlice";
 import styled from "styled-components";
 // Data
-import { Blog } from "../data";
 // Icons
 import { Icon } from '@iconify/react';
 
@@ -19,6 +18,13 @@ export default function SocialLinks() {
   return (
     <StyledSocialLinks>
       <a
+        href="https://www.kaggle.com/vuko91"
+        aria-label="Check out my Kaggle profile."
+        className="link-icons"
+        >
+        <Icon icon="devicon:kaggle-wordmark" />
+      </a>
+      <a
         href={html_url}
         aria-label="Check out my GitHub profile."
         className="link-icons"
@@ -32,6 +38,8 @@ export default function SocialLinks() {
         >
         <Icon icon="fa-brands:linkedin" />
       </a>
+
+
     </StyledSocialLinks>
   );
 }
