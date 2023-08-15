@@ -7,11 +7,11 @@ Variables
 ===============
 */
 :root {
-  --primary-light: #edbb5c;
+  --primary-light: #b0edfd;
   /* Primary Color */
-  --primary: #ebb667;
-  --primary-dark: #d47120;
-  --border: 1px solid #ebb667;
+  --primary: #61DBFB;
+  --primary-dark: #316e7e;
+  --border: 1px solid #61DBFB;
   --transition: all 0.3s linear;
   --nav-height: 61px;
   --min-footer-height: 11vh;

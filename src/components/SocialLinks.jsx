@@ -22,7 +22,7 @@ export default function SocialLinks() {
         aria-label="Check out my Kaggle profile."
         className="link-icons"
         >
-        <Icon icon="devicon:kaggle-wordmark" />
+        <Icon icon="simple-icons:kaggle" />
       </a>
       <a
         href={html_url}
