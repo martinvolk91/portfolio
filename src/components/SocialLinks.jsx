@@ -25,11 +25,13 @@ export default function SocialLinks() {
       >
         <Icon icon="icomoon-free:github" />
       </a>
-      {blog && (
-        <a href={blog} aria-label="External link" className="link-icons">
-          {Blog}
-        </a>
-      )}
+      <a
+        href="https://www.linkedin.com/in/martin-volk-43bb0061/"
+        aria-label="Check out my LinkedIn profile."
+        className="link-icons"
+        >
+        <Icon icon="fa-brands:linkedin" />
+      </a>
     </StyledSocialLinks>
   );
 }
