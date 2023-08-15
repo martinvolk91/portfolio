@@ -6,7 +6,7 @@ import {
   selectError,
   selectIsLoading,
 } from "./pages/homeSlice";
-import { fetchGitHubReops } from "./pages/allProjectsSlice";
+import { fetchGitHubReops } from "./pages/myProjectsSlice";
 import { HashRouter, Routes, Route } from "react-router-dom";
 import { Element } from "react-scroll";
 import { ThemeProvider } from "styled-components";
@@ -20,7 +20,7 @@ import GlobalStyles from "./components/GlobalStyles";
 import NavBar from "./components/NavBar";
 // Pages
 import Home from "./pages/Home";
-import AllProjects from "./pages/AllProjects";
+import MyProjects from "./pages/MyProjects";
 import NotFound from "./pages/NotFound";
 
 const darkMode = window.matchMedia("(prefers-color-scheme: dark)").matches;
@@ -89,7 +89,7 @@ export default function App() {
           </Element>
           <Routes>
             <Route exact path="/" element={<Home />} />
-            <Route path="/All-Projects" element={<AllProjects />} />
+            <Route path="/My-Projects" element={<MyProjects />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </ThemeProvider>

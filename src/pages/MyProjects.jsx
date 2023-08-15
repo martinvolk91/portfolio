@@ -1,7 +1,7 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import { selectData as homeData } from "../pages/homeSlice";
-import { selectData, selectError, selectIsLoading } from "./allProjectsSlice";
+import { selectData, selectError, selectIsLoading } from "./myProjectsSlice";
 import styled from "styled-components";
 // Icons
 import { Icon } from "@iconify/react";
@@ -40,7 +40,7 @@ const StyledSection = styled.section`
   }
 `;
 
-export default function AllProjects() {
+export default function MyProjects() {
   const [searchInput, setSearchInput] = React.useState("");
   const [filteredResults, setFilteredResults] = React.useState([]);
   const [pageItems, setPageItems] = React.useState([]);
@@ -52,7 +52,7 @@ export default function AllProjects() {
 
   React.useEffect(
     function () {
-      document.title = `${name} | All Projects`;
+      document.title = `${name} | My Projects`;
     },
     [name]
   );
@@ -129,7 +129,7 @@ export default function AllProjects() {
             <Container className="d-flex">
               <Title>
                 <h2>
-                  All <Icon icon="mdi:github" /> Projects
+                  My Projects
                 </h2>
                 <div className="underline"></div>
               </Title>
@@ -148,7 +148,7 @@ export default function AllProjects() {
             <Container className="d-flex">
               <Title>
                 <h2>
-                  All <Icon icon="mdi:github" /> Projects
+                  My Projects
                 </h2>
                 <div className="underline"></div>
               </Title>
@@ -167,7 +167,7 @@ export default function AllProjects() {
             <Container className="d-flex">
               <Title>
                 <h2>
-                  All <Icon icon="mdi:github" /> Projects
+                  My Projects
                 </h2>
                 <div className="underline"></div>
               </Title>

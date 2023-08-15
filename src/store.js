@@ -2,7 +2,7 @@
 import { configureStore } from "@reduxjs/toolkit";
 //Reducers
 import homeReducer from "./pages/homeSlice";
-import allProjectsReducer from "./pages/allProjectsSlice";
+import allProjectsReducer from "./pages/myProjectsSlice";
 
 export const store = configureStore({
   reducer: {
