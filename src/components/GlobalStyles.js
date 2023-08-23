@@ -1,4 +1,4 @@
-import { createGlobalStyle } from "styled-components";
+import {createGlobalStyle} from "styled-components";
 
 const GlobalStyles = createGlobalStyle`
 /*
@@ -24,8 +24,8 @@ Global Styles
 ===============
 */
 body {
-  background: ${({ theme }) => theme.background};
-  color: ${({ theme }) => theme.color};
+  background: ${({theme}) => theme.background};
+  color: ${({theme}) => theme.color};
 }
 
 a:hover {
@@ -36,8 +36,8 @@ a:hover {
   border-bottom: var(--border);
 
   img {
-    background: ${({ theme }) =>
-      theme.name === "light" ? "#45413C" : "#797B7B"};
+    background: ${({theme}) =>
+    theme.name === "light" ? "#45413C" : "#797B7B"};
   }
 }
 
@@ -45,7 +45,7 @@ a:hover {
   line-height: 0;
   font-size: 2.25rem;
   transition: var(--transition);
-  color: ${({ theme }) => theme.color};
+  color: ${({theme}) => theme.color};
 
   &:hover {
         color: var(--primary);
