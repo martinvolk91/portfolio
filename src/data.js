@@ -33,7 +33,7 @@ export const moreInfo = (
         Hi! My name is Martin and I'm a data scientist. Over the past few years,
         I have been involved in the sports betting and gaming industry where I specialized in developing recommender
         systems and other personalization machine learning solutions. My passion is tackling challenging problems
-        across various domains e.g. science, computer science, economics, logistics, robotics, and more.
+        across various domains e.g. science, computer science, economics, logistics, robotics, and more. <br/>
         Visit <a href="#/My-Projects">My Projects</a> page if you want to check out some of my personal projects and
         demos or visit my Kaggle or GitHub profiles.
     </>
@@ -106,6 +106,21 @@ export const projectCardImages = [
         name: "example-1",
         image: Logo,
     },
+];
+
+export const projectData = [
+    {
+        image: "",
+        name: 'Collaborative filtering',
+        description: "A collaborative filtering recommender system for movies based on the MovieLens dataset.",
+        homepage: "https://www.google.com",
+        html_url: "https://www.bing.com",
+    },
+    {
+        name: 'repo2',
+        // other properties
+    },
+    // Add more data as needed
 ];
 
 /* Contact Info
