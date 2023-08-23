@@ -7,7 +7,7 @@ import {
     selectIsLoading,
 } from "./pages/homeSlice";
 //import {fetchGitHubReops} from "./pages/myProjectsSlice";
-import {HashRouter, Routes, Route} from "react-router-dom";
+import {BrowserRouter, Routes, Route} from "react-router-dom";
 import {Element} from "react-scroll";
 import {ThemeProvider} from "styled-components";
 // Data
@@ -80,7 +80,7 @@ export default function App() {
         );
     } else {
         return (
-            <HashRouter>
+            <BrowserRouter>
                 <ThemeProvider theme={themes[theme]}>
                     <ScrollToTop/>
                     <GlobalStyles/>
@@ -93,7 +93,7 @@ export default function App() {
                         <Route path="*" element={<NotFound/>}/>
                     </Routes>
                 </ThemeProvider>
-            </HashRouter>
+            </BrowserRouter>
         );
     }
 }
