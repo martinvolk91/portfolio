@@ -1,12 +1,12 @@
 import React from "react";
-import { useSelector } from "react-redux";
-import { selectData } from "../pages/homeSlice";
+import {useSelector} from "react-redux";
+import {selectData} from "../pages/homeSlice";
 import styled from "styled-components";
 // Media
 import Logo from "../images/logo.svg";
 // Components
-import { Container } from "react-bootstrap";
-import { Spin } from "../components/globalStyledComponents";
+import {Container} from "react-bootstrap";
+import {Spin} from "../components/globalStyledComponents";
 
 const StyledNotFound = styled.main`
   display: flex;
@@ -35,25 +35,25 @@ const StyledNotFound = styled.main`
 `;
 
 export default function NotFound() {
-  const { name } = useSelector(selectData);
+    const {name} = useSelector(selectData);
 
-  React.useEffect(
-    function () {
-      document.title = `${name} | Portfolio`;
-    },
-    [name]
-  );
+    React.useEffect(
+        function () {
+            document.title = `${name} | Portfolio`;
+        },
+        [name]
+    );
 
-  return (
-    <>
-      <StyledNotFound>
-        <Container className="d-flex justify-content-center">
-          <span>4</span>
-          <img src={Logo} alt="React Logo" className="logo-img" />
-          <span>4</span>
-        </Container>
-        <p className="text-center">Sorry, page not found...</p>
-      </StyledNotFound>
-    </>
-  );
+    return (
+        <>
+            <StyledNotFound>
+                <Container className="d-flex justify-content-center">
+                    <span>4</span>
+                    <img src={Logo} alt="React Logo" className="logo-img"/>
+                    <span>4</span>
+                </Container>
+                <p className="text-center">Sorry, page not found...</p>
+            </StyledNotFound>
+        </>
+    );
 }

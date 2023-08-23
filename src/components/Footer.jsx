@@ -16,9 +16,9 @@ const StyledFooter = styled.footer`
 `;
 
 export default function Footer() {
-  return (
-    <StyledFooter className="d-flex align-items-center justify-content-center p-2">
-      <SocialLinks />
-    </StyledFooter>
-  );
+    return (
+        <StyledFooter className="d-flex align-items-center justify-content-center p-2">
+            <SocialLinks/>
+        </StyledFooter>
+    );
 }

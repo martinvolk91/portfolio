@@ -125,15 +125,15 @@ export default function NavBar({Logo}) {
                                 navLinks.to.map((el) => {
                                         return (
                                             <Nav.Item key={el.id}>
-                                              <ScrollLink
-                                                to={el.to}
-                                                spy={true}
-                                                activeClass="active"
-                                                className="nav-link"
-                                                onClick={closeExpanded}
+                                                <ScrollLink
+                                                    to={el.to}
+                                                    spy={true}
+                                                    activeClass="active"
+                                                    className="nav-link"
+                                                    onClick={closeExpanded}
                                                 >
-                                                {el.name}
-                                              </ScrollLink>
+                                                    {el.name}
+                                                </ScrollLink>
                                             </Nav.Item>
                                         )
                                     }
@@ -161,12 +161,12 @@ export default function NavBar({Logo}) {
                                 <Link
                                     to="/My-Projects"
                                     className={
-                                    pathname === "/My-Projects"
-                                        ? "nav-link active"
-                                        : "nav-link"
-                                }
+                                        pathname === "/My-Projects"
+                                            ? "nav-link active"
+                                            : "nav-link"
+                                    }
                                     onClick={closeExpanded}
-                                    >
+                                >
                                     My Projects
                                 </Link>
                             </Nav.Item>

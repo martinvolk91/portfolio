@@ -32,7 +32,7 @@ export const moreInfo = (
     <>
         Hi! My name is Martin and I'm a data scientist. Over the past few years,
         I have been involved in the sports betting and gaming industry where I specialized in developing recommender
-        systems and other personalization machine learning solutions. My passion lies in tackling challenging problems
+        systems and other personalization machine learning solutions. My passion is tackling challenging problems
         across various domains e.g. science, computer science, economics, logistics, robotics, and more.
         Visit <a href="#/My-Projects">My Projects</a> page if you want to check out some of my personal projects and
         demos or visit my Kaggle or GitHub profiles.
