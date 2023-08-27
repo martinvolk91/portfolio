@@ -30,7 +30,7 @@ export default function ContactForm() {
         const postData = {
             movie_ids: [12, 45, 25, 99, 329, 36, 520, 580, 956, 802, 850, 1410, 2130, 315]
         };
-        fetch('http://0.0.0.0:8080/api/recommend', {
+        fetch('http://www.martinvolk.me:8080/api/recommend', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
