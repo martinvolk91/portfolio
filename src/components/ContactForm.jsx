@@ -90,9 +90,9 @@ export default function ContactForm() {
 
     return (
         <>
-        <div>
-            <Button onClick={handleClick}>Send POST Request</Button>
-        </div>
+        {/*<div>*/}
+        {/*    <Button onClick={handleClick}>Send POST Request</Button>*/}
+        {/*</div>*/}
             <Form noValidate validated={isValidated} onSubmit={handleSubmit}>
                 <Form.Group className="mx-auto mb-3 form-group" controlId="name">
                     <Form.Label>Name</Form.Label>
