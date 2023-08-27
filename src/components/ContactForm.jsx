@@ -25,6 +25,28 @@ export default function ContactForm() {
         return response;
     }
 
+    async function handleClick() {
+        console.log("Sent")
+        const postData = {
+            movie_ids: [12, 45, 25, 99, 329, 36, 520, 580, 956, 802, 850, 1410, 2130, 315]
+        };
+        fetch('http://localhost:8080/api/recommend', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(postData),
+        })
+      .then((response) => response.json())
+      .then((data) => {
+          console.log('API Response:', data);
+      })
+      .catch((error) => {
+          console.error('Error:', error);
+      });
+    };
+
+
     async function handleSubmit(event) {
         const form = event.currentTarget;
         setSuccess(false);
@@ -68,6 +90,9 @@ export default function ContactForm() {
 
     return (
         <>
+        <div>
+            <Button onClick={handleClick}>Send POST Request</Button>
+        </div>
             <Form noValidate validated={isValidated} onSubmit={handleSubmit}>
                 <Form.Group className="mx-auto mb-3 form-group" controlId="name">
                     <Form.Label>Name</Form.Label>
@@ -108,6 +133,7 @@ export default function ContactForm() {
                                 <Spinner animation="border" variant="success" size="sm"/>
                             )}
                         </Button>
+
                     )}
 
                     <Alert

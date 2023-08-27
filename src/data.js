@@ -113,7 +113,7 @@ export const projectData = [
         image: "",
         name: 'Collaborative filtering',
         description: "A collaborative filtering recommender system for movies based on the MovieLens dataset.",
-        homepage: "https://www.google.com",
+        homepage: "localhost:8080/api/recommend",
         html_url: "https://www.bing.com",
     },
     {
