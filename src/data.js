@@ -111,15 +111,15 @@ export const projectCardImages = [
 export const projectData = [
     {
         image: "",
-        name: 'Collaborative filtering',
-        description: "A collaborative filtering recommender system for movies based on the MovieLens dataset.",
+        name: 'Movie Recommender',
+        description: "A movie recommender system based on the MovieLens 25M dataset.",
         homepage: "localhost:8080/api/recommend",
-        html_url: "https://www.bing.com",
+//        html_url: "https://www.bing.com",
     },
-    {
-        name: 'repo2',
+//    {
+//        name: 'repo2',
         // other properties
-    },
+//    },
     // Add more data as needed
 ];
 

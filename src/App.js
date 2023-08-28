@@ -21,6 +21,7 @@ import NavBar from "./components/NavBar";
 // Pages
 import Home from "./pages/Home";
 import MyProjects from "./pages/MyProjects";
+import TestPage from "./pages/TestPage";
 import NotFound from "./pages/NotFound";
 
 const darkMode = window.matchMedia("(prefers-color-scheme: dark)").matches;
@@ -90,7 +91,10 @@ export default function App() {
                     <Routes>
                         <Route exact path="/" element={<Home/>}/>
                         <Route path="/My-Projects" element={<MyProjects/>}/>
+                        <Route path="/TestPage" element={<TestPage/>}/>
                         <Route path="*" element={<NotFound/>}/>
+                    </Routes>
+                    <Routes>
                     </Routes>
                 </ThemeProvider>
             </BrowserRouter>

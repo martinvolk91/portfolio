@@ -30,7 +30,8 @@ export default function ContactForm() {
         const postData = {
             movie_ids: [12, 45, 25, 99, 329, 36, 520, 580, 956, 802, 850, 1410, 2130, 315]
         };
-        fetch('http://www.martinvolk.me:8080/api/recommend', {
+//        fetch('http://www.martinvolk.me:8080/api/recommend', {
+        fetch('http://localhost:5000/api/recommend', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -90,9 +91,9 @@ export default function ContactForm() {
 
     return (
         <>
-        {/*<div>*/}
-        {/*    <Button onClick={handleClick}>Send POST Request</Button>*/}
-        {/*</div>*/}
+        <div>
+            <Button onClick={handleClick}>Send POST Request</Button>
+        </div>
             <Form noValidate validated={isValidated} onSubmit={handleSubmit}>
                 <Form.Group className="mx-auto mb-3 form-group" controlId="name">
                     <Form.Label>Name</Form.Label>

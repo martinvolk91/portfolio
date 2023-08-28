@@ -1,7 +1,7 @@
 import React from "react";
 import {useSelector} from "react-redux";
 import {selectData as homeData} from "../pages/homeSlice";
-import {selectData, selectError, selectIsLoading} from "./myProjectsSlice";
+//import {selectData, selectError, selectIsLoading} from "./myProjectsSlice";
 import styled from "styled-components";
 // Icons
 import {Icon} from "@iconify/react";
@@ -19,7 +19,6 @@ import {
     Title,
     Loading,
 } from "../components/globalStyledComponents";
-import StyledCard from "../components/StyledCard";
 import Footer from "../components/Footer";
 
 const StyledSection = styled.section`
@@ -40,7 +39,7 @@ const StyledSection = styled.section`
   }
 `;
 
-export default function MyProjects() {
+export default function MovieRecommender() {
     const [searchInput, setSearchInput] = React.useState("");
     const [filteredResults, setFilteredResults] = React.useState([]);
     const [pageItems, setPageItems] = React.useState([]);
@@ -52,7 +51,7 @@ export default function MyProjects() {
 
     React.useEffect(
         function () {
-            document.title = `${name} | My Projects`;
+            document.title = `${name} | Movie Recommender`;
         },
         [name]
     );
@@ -129,7 +128,7 @@ export default function MyProjects() {
                         <Container className="d-flex">
                             <Title>
                                 <h2>
-                                    My Projects
+                                    Movie Recommender
                                 </h2>
                                 <div className="underline"></div>
                             </Title>
@@ -148,7 +147,7 @@ export default function MyProjects() {
                         <Container className="d-flex">
                             <Title>
                                 <h2>
-                                    My Projects
+                                    Movie Recommender
                                 </h2>
                                 <div className="underline"></div>
                             </Title>
@@ -167,7 +166,7 @@ export default function MyProjects() {
                         <Container className="d-flex">
                             <Title>
                                 <h2>
-                                    My Projects
+                                    Movie Recommender
                                 </h2>
                                 <div className="underline"></div>
                             </Title>
@@ -178,8 +177,8 @@ export default function MyProjects() {
                                     <Icon icon="ic:round-search"/>
                                 </InputGroup.Text>
                                 <FormControl
-                                    placeholder="Project name"
-                                    aria-label="Search projects"
+                                    placeholder="Movie"
+                                    aria-label="Search movies"
                                     aria-describedby="search"
                                     onChange={(e) => setSearchInput(e.currentTarget.value)}
                                 />
