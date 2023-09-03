@@ -6,6 +6,7 @@ import {Card} from "react-bootstrap";
 
 const StyledMovieCard = styled.div`
   .card {
+    height: 80px;
     color: ${({theme}) => theme.color};
     background: ${({theme}) => (theme.name === "light" ? "" : "#797B7B")};
     box-shadow: ${({theme}) =>
@@ -30,10 +31,10 @@ const StyledMovieCard = styled.div`
   }
 `;
 
-export default function StyledCard({title}) {
+export default function MovieCard({title, onClick}) {
     return (
         <StyledMovieCard>
-            <Card>
+            <Card onClick={onClick}>
                 <Card.Body className="overflow-auto text-center">
                     <Card.Title>{title}</Card.Title>
                 </Card.Body>
