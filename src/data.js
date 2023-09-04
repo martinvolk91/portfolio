@@ -113,7 +113,7 @@ export const projectData = [
         image: "",
         name: 'Movie Recommender',
         description: "A movie recommender system based on the MovieLens 25M dataset.",
-        homepage: "localhost:8080/api/recommend",
+        homepage: "/MovieRecommender",
 //        html_url: "https://www.bing.com",
     },
 //    {

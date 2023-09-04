@@ -170,19 +170,6 @@ export default function NavBar({Logo}) {
                                     My Projects
                                 </Link>
                             </Nav.Item>
-                            <Nav.Item>
-                                <Link
-                                    to="/TestPage"
-                                    className={
-                                        pathname === "/TestPage"
-                                            ? "nav-link active"
-                                            : "nav-link"
-                                    }
-                                    onClick={closeExpanded}
-                                    >
-                                    TestPage
-                                </Link>
-                            </Nav.Item>
                         </Nav>
                         <Nav>
                             <ThemeToggle/>

@@ -1,275 +1,230 @@
-import React from "react";
-import {useSelector} from "react-redux";
-import {selectData as homeData} from "../pages/homeSlice";
-//import {selectData, selectError, selectIsLoading} from "./myProjectsSlice";
-import styled from "styled-components";
-// Icons
-import {Icon} from "@iconify/react";
-// Components
+import React, {useState, useEffect} from 'react';
+import Papa from 'papaparse';
+import styled from 'styled-components';
+import MovieCard from "../components/movie-recommender/MovieCard";
 import {
-    Col,
-    Container,
     FormControl,
     InputGroup,
     Pagination,
-    Row,
 } from "react-bootstrap";
-import {
-    BackToTop,
-    Title,
-    Loading,
-} from "../components/globalStyledComponents";
-import Footer from "../components/Footer";
+import {Icon} from "@iconify/react";
 
-const StyledSection = styled.section`
-  min-height: calc(100vh - var(--min-footer-height) - var(--nav-height));
-
-  .input-group {
-    max-width: 90vw;
-  }
-
-  .row {
-    min-height: var(--card-height);
-  }
-
-  @media screen and (min-width: 800px) {
-    .input-group {
-      width: 75%;
-    }
-  }
+const ListsContainer = styled.div`
+  display: flex;
+  height: 100vh;
 `;
 
-export default function MovieRecommender() {
-    const [searchInput, setSearchInput] = React.useState("");
-    const [filteredResults, setFilteredResults] = React.useState([]);
-    const [pageItems, setPageItems] = React.useState([]);
-    const [activePage, setActivePage] = React.useState(1);
-    const isLoading = useSelector(selectIsLoading);
-    const error = useSelector(selectError);
-    const data = useSelector(selectData);
-    const {name} = useSelector(homeData);
+const ListWrapper = styled.div`
+  flex: 1;
+  margin: 8px;
+  display: flex;
+  flex-direction: column;
+`;
 
-    React.useEffect(
-        function () {
-            document.title = `${name} | Movie Recommender`;
-        },
-        [name]
-    );
+const ListContainer = styled.div`
+  flex: 1;
+  padding: 16px;
+  border: 1px solid #ccc;
+  overflow-y: auto; /* Add scroll when content exceeds the container height */
+  max-height: ${(props) => props.maxHeight}px;
+`;
 
-    React.useEffect(
-        function () {
-            if (searchInput !== "") {
-                const filteredData = data.filter((item) => {
-                    return item.name.toLowerCase().includes(searchInput.toLowerCase());
+const ListTitle = styled.h3`
+  background-color: white; /* Change this background color as needed */
+  position: sticky;
+  top: 0;
+  z-index: 1;
+`;
+
+const CenteredButton = styled.button`
+  margin-top: 45vh; /* Add margin to separate from lists */
+  height: 50px
+`;
+
+const PaginationContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+`;
+
+const StyledPagination = styled(Pagination)`
+  margin: 0;
+`;
+
+function ImplicitMovieRecommend() {
+    const [list1, setList1] = useState([]);
+    const [list2, setList2] = useState([]);
+    const [list3, setList3] = useState([]);
+    const [loading, setLoading] = useState(false);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [searchTerm, setSearchTerm] = useState('');
+    const itemsPerPage = 10; // Adjust the number of items per page as needed
+
+    const handleTransfer = (item, sourceList) => {
+        console.log(sourceList)
+        if (sourceList === 'list1') {
+            setList1(list1.filter((i) => i !== item)); // removes the item from list1
+            setList2([...list2, item]); // adds the item to list 2
+        } else if (sourceList === 'list2') {
+            setList2(list2.filter((i) => i !== item));
+            setList1([...list1, item]);
+        }
+    };
+
+    const handleSearchChange = (e) => {
+        setSearchTerm(e.target.value);
+        setCurrentPage(1);
+    };
+
+    async function sendSelection() {
+        setLoading(true);
+        console.log("Sent")
+
+        const movieIds = list2.map((item) => item.movie_id);
+
+        const postData = {
+            movie_ids: movieIds,
+        };
+                fetch('http://www.martinvolk.me:8080/api/recommend', {
+//        fetch('http://localhost:5000/api/recommend', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(postData),
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                console.log('API Response:', data);
+                setList3(data)
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+        setLoading(false);
+    };
+
+    useEffect(() => {
+        // Replace with the public S3 URL of your CSV file
+        const s3CsvUrl = 'https://s3.eu-west-1.amazonaws.com/martinvolk.me/movies_recommender/movies.csv';
+
+        fetch(s3CsvUrl)
+            .then((response) => response.text())
+            .then((csvText) => {
+                Papa.parse(csvText, {
+                    header: true,
+                    dynamicTyping: true,
+                    skipEmptyLines: true,
+                    complete: (result) => {
+                        setList1(result.data);
+                    },
                 });
-                const tempPageItems = [];
-                for (
-                    let number = 1;
-                    number <= Math.ceil(filteredData.length / 6);
-                    number++
-                ) {
-                    tempPageItems.push(
-                        <Pagination.Item
-                            key={number}
-                            active={number === activePage}
-                            onClick={() => setActivePage(number)}
-                        >
-                            {number}
-                        </Pagination.Item>
-                    );
-                    setPageItems([...tempPageItems]);
-                }
-                if (activePage === 1) {
-                    setFilteredResults(filteredData.slice(0, 6));
-                } else {
-                    setFilteredResults(
-                        filteredData.slice((activePage - 1) * 6, (activePage - 1) * 6 + 6)
-                    );
-                }
-            } else {
-                const tempPageItems = [];
-                for (let number = 1; number <= Math.ceil(data.length / 6); number++) {
-                    tempPageItems.push(
-                        <Pagination.Item
-                            key={number}
-                            active={number === activePage}
-                            onClick={() => setActivePage(number)}
-                        >
-                            {number}
-                        </Pagination.Item>
-                    );
-                    setPageItems([...tempPageItems]);
-                }
-                if (activePage === 1) {
-                    setFilteredResults(data.slice(0, 6));
-                } else {
-                    setFilteredResults(
-                        data.slice((activePage - 1) * 6, (activePage - 1) * 6 + 6)
-                    );
-                }
-            }
-        },
-        [searchInput, data, pageItems.length, activePage]
+            })
+            .catch((error) => {
+                console.error('Error fetching CSV:', error);
+            });
+    }, [currentPage]);
+
+    const goToPage = (pageNumber) => {
+        setCurrentPage(pageNumber);
+    };
+
+    const filteredData = list1.filter((row) =>
+        row.title.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
-    React.useEffect(
-        function () {
-            // Anytime the search input changes set the active page back to 1
-            setActivePage(1);
-        },
-        [searchInput]
-    );
+    const totalPages = Math.ceil(filteredData.length / itemsPerPage);
 
-    if (isLoading) {
-        return (
-            <>
-                <main>
-                    <StyledSection className="d-flex flex-column justify-content-center">
-                        <Container className="d-flex">
-                            <Title>
-                                <h2>
-                                    Movie Recommender
-                                </h2>
-                                <div className="underline"></div>
-                            </Title>
-                        </Container>
-                        <Loading/>
-                    </StyledSection>
-                </main>
-                <Footer/>
-            </>
-        );
-    } else if (error) {
-        return (
-            <>
-                <main>
-                    <StyledSection className="d-flex flex-column justify-content-center">
-                        <Container className="d-flex">
-                            <Title>
-                                <h2>
-                                    Movie Recommender
-                                </h2>
-                                <div className="underline"></div>
-                            </Title>
-                        </Container>
-                        <h2 className="my-5 text-center">{error}</h2>
-                    </StyledSection>
-                </main>
-                <Footer/>
-            </>
-        );
-    } else {
-        return (
-            <>
-                <main>
-                    <StyledSection className="d-flex flex-column justify-content-center">
-                        <Container className="d-flex">
-                            <Title>
-                                <h2>
-                                    Movie Recommender
-                                </h2>
-                                <div className="underline"></div>
-                            </Title>
-                        </Container>
-                        <Container>
-                            <InputGroup className="mx-auto mb-3">
-                                <InputGroup.Text id="search">
-                                    <Icon icon="ic:round-search"/>
-                                </InputGroup.Text>
-                                <FormControl
-                                    placeholder="Movie"
-                                    aria-label="Search movies"
-                                    aria-describedby="search"
-                                    onChange={(e) => setSearchInput(e.currentTarget.value)}
+    const startPage = Math.max(1, currentPage - 2);
+    const endPage = Math.min(totalPages, currentPage + 2);
+
+    return (
+        <>
+            <div>
+                How to use: Select a few movies from the left most column by clicking on the cards. You can use search to browse among 60k+ movies.
+                You can remove the movies from your selection the same way. Once ready, click the "Crunch" button to "crunch the numbers" and you will
+                receive a list of top 10 movies recommendations based on your selection.
+            </div>
+            <ListsContainer>
+                <ListWrapper>
+                    <ListTitle>Select movies</ListTitle>
+                    <ListContainer>
+                        <InputGroup className="mx-auto mb-3">
+                            <InputGroup.Text id="search">
+                                <Icon icon="ic:round-search"/>
+                            </InputGroup.Text>
+                            <FormControl
+                                placeholder="Search movies"
+                                aria-label="Search projects"
+                                aria-describedby="search"
+                                onChange={handleSearchChange}
+                            />
+                        </InputGroup>
+                        <ul>
+                            {filteredData
+                                .slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage)
+                                .map((row, index) => (
+                                    <MovieCard key={index} title={JSON.stringify(row.title)}
+                                               onClick={() => handleTransfer(row, 'list1')}>
+                                    </MovieCard>
+                                ))}
+                        </ul>
+                        <PaginationContainer>
+                            <StyledPagination>
+                                <Pagination.Prev
+                                    onClick={() => goToPage(currentPage - 1)}
+                                    disabled={currentPage === 1}
                                 />
-                            </InputGroup>
-                            <Row
-                                xs={1}
-                                md={2}
-                                lg={3}
-                                className="g-4 justify-content-center row"
-                            >
-                                {searchInput.length > 0
-                                    ? filteredResults.map(function ({
-                                                                        id,
-                                                                        image,
-                                                                        name,
-                                                                        description,
-                                                                        html_url,
-                                                                        homepage,
-                                                                    }) {
-                                        return (
-                                            <Col>
-                                                <StyledCard
-                                                    key={id}
-                                                    image={image}
-                                                    name={name}
-                                                    description={description}
-                                                    url={html_url}
-                                                    demo={homepage}
-                                                />
-                                            </Col>
-                                        );
-                                    })
-                                    : filteredResults.map(function ({
-                                                                        id,
-                                                                        image,
-                                                                        name,
-                                                                        description,
-                                                                        html_url,
-                                                                        homepage,
-                                                                    }) {
-                                        return (
-                                            <Col>
-                                                <StyledCard
-                                                    key={id}
-                                                    image={image}
-                                                    name={name}
-                                                    description={description}
-                                                    url={html_url}
-                                                    demo={homepage}
-                                                />
-                                            </Col>
-                                        );
-                                    })}
-                            </Row>
-                            <Container className="d-flex justify-content-center mt-4">
-                                {pageItems.length <= 2 ? (
-                                    <Pagination size="lg" className="mb-4">
-                                        {pageItems}
-                                    </Pagination>
-                                ) : (
-                                    <Pagination className="mb-5">
-                                        <Pagination.Prev
-                                            onClick={() =>
-                                                activePage === 1
-                                                    ? setActivePage(pageItems.length)
-                                                    : setActivePage(activePage - 1)
-                                            }
-                                        />
-                                        {pageItems[0]}
-                                        <Pagination.Ellipsis/>
-                                        <Pagination.Item active={true}>
-                                            {activePage}
-                                        </Pagination.Item>
-                                        <Pagination.Ellipsis/>
-                                        {pageItems[pageItems.length - 1]}
-                                        <Pagination.Next
-                                            onClick={() =>
-                                                activePage === pageItems.length
-                                                    ? setActivePage(1)
-                                                    : setActivePage(activePage + 1)
-                                            }
-                                        />
-                                    </Pagination>
-                                )}
-                            </Container>
-                        </Container>
-                    </StyledSection>
-                </main>
-                <BackToTop home={"Home"}/>
-                <Footer/>
-            </>
-        );
-    }
+                                {Array.from({length: endPage - startPage + 1}).map((_, index) => (
+                                    <Pagination.Item
+                                        key={startPage + index}
+                                        onClick={() => goToPage(startPage + index)}
+                                        active={startPage + index === currentPage}
+                                    >
+                                        {startPage + index}
+                                    </Pagination.Item>
+                                ))}
+                                <Pagination.Next
+                                    onClick={() => goToPage(currentPage + 1)}
+                                    disabled={currentPage === totalPages}
+                                />
+                            </StyledPagination>
+                        </PaginationContainer>
+                    </ListContainer>
+                </ListWrapper>
+                <ListWrapper>
+                    <ListTitle>Your selection</ListTitle>
+                    <ListContainer>
+                        <ul>
+                            {list2.map((item) => (
+                                <MovieCard
+                                    key={item.movie_id} // Correctly uses a unique key prop
+                                    title={item.title}
+                                    onClick={() => handleTransfer(item, 'list2')}
+                                >
+                                </MovieCard>
+                            ))}
+                        </ul>
+                    </ListContainer>
+                </ListWrapper>
+                <CenteredButton onClick={sendSelection} disabled={loading}>
+                    {loading ? 'Loading...' : 'Crunch'}
+                </CenteredButton>
+                <ListWrapper>
+                    <ListTitle>Top 10 recommended for you</ListTitle>
+                    <ListContainer>
+                        <ul>
+                            {list3.map((item) => (
+                                <MovieCard key={item} title={item}>
+                                </MovieCard>
+                            ))}
+                        </ul>
+                    </ListContainer>
+                </ListWrapper>
+            </ListsContainer>
+        </>
+    );
 }
+
+export default ImplicitMovieRecommend;
