@@ -180,6 +180,16 @@ function ImplicitMovieRecommend() {
                                     onClick={() => goToPage(currentPage - 1)}
                                     disabled={currentPage === 1}
                                 />
+                                {startPage > 1 && (
+                                    <>
+                                        <Pagination.Item onClick={() => goToPage(1)}>
+                                            1
+                                        </Pagination.Item>
+                                        {startPage > 2 && (
+                                            <Pagination.Ellipsis disabled />
+                                        )}
+                                    </>
+                                )}
                                 {Array.from({length: endPage - startPage + 1}).map((_, index) => (
                                     <Pagination.Item
                                         key={startPage + index}
@@ -189,6 +199,16 @@ function ImplicitMovieRecommend() {
                                         {startPage + index}
                                     </Pagination.Item>
                                 ))}
+                                {endPage < totalPages && (
+                                    <>
+                                        {endPage < totalPages - 1 && (
+                                            <Pagination.Ellipsis disabled />
+                                        )}
+                                        <Pagination.Item onClick={() => goToPage(totalPages)}>
+                                            {totalPages}
+                                        </Pagination.Item>
+                                    </>
+                                )}
                                 <Pagination.Next
                                     onClick={() => goToPage(currentPage + 1)}
                                     disabled={currentPage === totalPages}
