@@ -9,10 +9,11 @@ import {
     Button
 } from "react-bootstrap";
 import {Icon} from "@iconify/react";
+import {Title} from "../components/globalStyledComponents";
 
 const ListsContainer = styled.div`
   display: flex;
-  height: 100vh;
+  height: 90vh;
 `;
 
 const ListWrapper = styled.div`
@@ -30,16 +31,10 @@ const ListContainer = styled.div`
   max-height: ${(props) => props.maxHeight}px;
 `;
 
-const ListTitle = styled.h3`
-  background-color: white; /* Change this background color as needed */
-  position: sticky;
-  top: 0;
-  z-index: 1;
-`;
-
 const CenteredButton = styled(Button)`
   margin-top: 45vh; /* Add margin to separate from lists */
-  height: 50px
+  height: 50px;
+//  background-color: ${({theme}) => theme.background};
 `;
 
 const PaginationContainer = styled.div`
@@ -89,7 +84,7 @@ function ImplicitMovieRecommend() {
         const postData = {
             movie_ids: movieIds,
         };
-                fetch('http://www.martinvolk.me:8080/api/recommend', {
+        fetch('http://www.martinvolk.me:8080/api/recommend', {
 //        fetch('http://localhost:5000/api/recommend', {
             method: 'POST',
             headers: {
@@ -111,7 +106,7 @@ function ImplicitMovieRecommend() {
 
     useEffect(() => {
         // Replace with the public S3 URL of your CSV file
-        const s3CsvUrl = 'https://s3.eu-west-1.amazonaws.com/martinvolk.me/movies_recommender/movies.csv';
+        const s3CsvUrl = 'https://s3.eu-west-1.amazonaws.com/martinvolk.me/movies_recommender/movies.tsv';
 
         fetch(s3CsvUrl)
             .then((response) => response.text())
@@ -120,6 +115,7 @@ function ImplicitMovieRecommend() {
                     header: true,
                     dynamicTyping: true,
                     skipEmptyLines: true,
+                    delimiter: "\t",
                     complete: (result) => {
                         setList1(result.data);
                     },
@@ -145,14 +141,11 @@ function ImplicitMovieRecommend() {
 
     return (
         <>
-            <div>
-                How to use: Select a few movies from the left most column by clicking on the cards. You can use search to browse among 60k+ movies.
-                You can remove the movies from your selection the same way. Once ready, click the "Crunch" button to "crunch the numbers" and you will
-                receive a list of top 10 movies recommendations based on your selection.
-            </div>
             <ListsContainer>
                 <ListWrapper>
-                    <ListTitle>Select movies</ListTitle>
+                    <Title>
+                        <h3>Available movies</h3>
+                    </Title>
                     <ListContainer>
                         <InputGroup className="mx-auto mb-3">
                             <InputGroup.Text id="search">
@@ -165,11 +158,11 @@ function ImplicitMovieRecommend() {
                                 onChange={handleSearchChange}
                             />
                         </InputGroup>
-                        <ul>
+                        <ul style={{paddingLeft: 0}}>
                             {filteredData
                                 .slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage)
                                 .map((row, index) => (
-                                    <MovieCard key={index} title={JSON.stringify(row.title)}
+                                    <MovieCard key={index} title={row.title}
                                                onClick={() => handleTransfer(row, 'list1')}>
                                     </MovieCard>
                                 ))}
@@ -186,23 +179,29 @@ function ImplicitMovieRecommend() {
                                             1
                                         </Pagination.Item>
                                         {startPage > 2 && (
-                                            <Pagination.Ellipsis disabled />
+                                            <Pagination.Ellipsis disabled/>
                                         )}
                                     </>
                                 )}
-                                {Array.from({length: endPage - startPage + 1}).map((_, index) => (
-                                    <Pagination.Item
-                                        key={startPage + index}
-                                        onClick={() => goToPage(startPage + index)}
-                                        active={startPage + index === currentPage}
-                                    >
-                                        {startPage + index}
-                                    </Pagination.Item>
-                                ))}
+                                {Array.from({length: 3}).map((_, index) => {
+                                    const page = currentPage - 1 + index;
+                                    if (page >= startPage && page <= endPage) {
+                                        return (
+                                            <Pagination.Item
+                                                key={page}
+                                                onClick={() => goToPage(page)}
+                                                active={page === currentPage}
+                                            >
+                                                {page}
+                                            </Pagination.Item>
+                                        );
+                                    }
+                                    return null;
+                                })}
                                 {endPage < totalPages && (
                                     <>
                                         {endPage < totalPages - 1 && (
-                                            <Pagination.Ellipsis disabled />
+                                            <Pagination.Ellipsis disabled/>
                                         )}
                                         <Pagination.Item onClick={() => goToPage(totalPages)}>
                                             {totalPages}
@@ -218,9 +217,11 @@ function ImplicitMovieRecommend() {
                     </ListContainer>
                 </ListWrapper>
                 <ListWrapper>
-                    <ListTitle>Your selection</ListTitle>
+                    <Title>
+                        <h3>Your selection</h3>
+                    </Title>
                     <ListContainer>
-                        <ul>
+                        <ul style={{paddingLeft: 0}}>
                             {list2.map((item) => (
                                 <MovieCard
                                     key={item.movie_id} // Correctly uses a unique key prop
@@ -237,9 +238,11 @@ function ImplicitMovieRecommend() {
                     {loading ? 'Loading...' : crunchAgain ? 'Crunch Again' : 'Crunch'}
                 </CenteredButton>
                 <ListWrapper>
-                    <ListTitle>Top 10 recommended for you</ListTitle>
+                    <Title>
+                        <h3>Top 10 recommended for you</h3>
+                    </Title>
                     <ListContainer>
-                        <ul>
+                        <ul style={{paddingLeft: 0}}>
                             {list3.map((item) => (
                                 <MovieCard key={item} title={item}>
                                 </MovieCard>
