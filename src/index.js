@@ -16,7 +16,7 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
     <Provider store={store}>
         <AppProvider>
-            <App/>8080
+            <App/>
         </AppProvider>
     </Provider>
 );

@@ -6,6 +6,7 @@ import {
     FormControl,
     InputGroup,
     Pagination,
+    Button
 } from "react-bootstrap";
 import {Icon} from "@iconify/react";
 
@@ -36,7 +37,7 @@ const ListTitle = styled.h3`
   z-index: 1;
 `;
 
-const CenteredButton = styled.button`
+const CenteredButton = styled(Button)`
   margin-top: 45vh; /* Add margin to separate from lists */
   height: 50px
 `;
@@ -57,6 +58,7 @@ function ImplicitMovieRecommend() {
     const [list2, setList2] = useState([]);
     const [list3, setList3] = useState([]);
     const [loading, setLoading] = useState(false);
+    const [crunchAgain, setCrunchAgain] = useState(false);
     const [currentPage, setCurrentPage] = useState(1);
     const [searchTerm, setSearchTerm] = useState('');
     const itemsPerPage = 10; // Adjust the number of items per page as needed
@@ -70,6 +72,7 @@ function ImplicitMovieRecommend() {
             setList2(list2.filter((i) => i !== item));
             setList1([...list1, item]);
         }
+        setCrunchAgain(false)
     };
 
     const handleSearchChange = (e) => {
@@ -103,6 +106,7 @@ function ImplicitMovieRecommend() {
                 console.error('Error:', error);
             });
         setLoading(false);
+        setCrunchAgain(true)
     };
 
     useEffect(() => {
@@ -208,8 +212,9 @@ function ImplicitMovieRecommend() {
                         </ul>
                     </ListContainer>
                 </ListWrapper>
-                <CenteredButton onClick={sendSelection} disabled={loading}>
-                    {loading ? 'Loading...' : 'Crunch'}
+                <CenteredButton variant="primary" onClick={sendSelection} disabled={loading}>
+                    {/*{loading ? 'Loading...' : 'Crunch'}*/}
+                    {loading ? 'Loading...' : crunchAgain ? 'Crunch Again' : 'Crunch'}
                 </CenteredButton>
                 <ListWrapper>
                     <ListTitle>Top 10 recommended for you</ListTitle>
