@@ -1,4 +1,6 @@
 import React, {useState, useEffect} from 'react';
+import {useSelector} from "react-redux";
+import {selectData} from "../pages/homeSlice";
 import Papa from 'papaparse';
 import styled from 'styled-components';
 import MovieCard from "../components/movie-recommender/MovieCard";
@@ -57,6 +59,7 @@ function ImplicitMovieRecommend() {
     const [searchTerm, setSearchTerm] = useState('');
     const itemsPerPage = 10; // Adjust the number of items per page as needed
     const [loadingMessage, setLoadingMessage] = useState('');
+    const {name} = useSelector(selectData);
 
     const handleTransfer = (item, sourceList) => {
         console.log(sourceList)
@@ -111,6 +114,7 @@ function ImplicitMovieRecommend() {
 
     useEffect(() => {
         // Replace with the public S3 URL of your CSV file
+        document.title = `${name} | Movie Recommender`;
         const s3CsvUrl = 'https://s3.eu-west-1.amazonaws.com/martinvolk.me/movies_recommender/movies.tsv';
 
         fetch(s3CsvUrl)
