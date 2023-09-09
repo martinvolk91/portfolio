@@ -53,10 +53,10 @@ function ImplicitMovieRecommend() {
     const [list2, setList2] = useState([]);
     const [list3, setList3] = useState([]);
     const [loading, setLoading] = useState(false);
-    const [crunchAgain, setCrunchAgain] = useState(false);
     const [currentPage, setCurrentPage] = useState(1);
     const [searchTerm, setSearchTerm] = useState('');
     const itemsPerPage = 10; // Adjust the number of items per page as needed
+    const [loadingMessage, setLoadingMessage] = useState('');
 
     const handleTransfer = (item, sourceList) => {
         console.log(sourceList)
@@ -67,7 +67,6 @@ function ImplicitMovieRecommend() {
             setList2(list2.filter((i) => i !== item));
             setList1([...list1, item]);
         }
-        setCrunchAgain(false)
     };
 
     const handleSearchChange = (e) => {
@@ -76,7 +75,9 @@ function ImplicitMovieRecommend() {
     };
 
     async function sendSelection() {
+        setList3([]); // Empty list3
         setLoading(true);
+        setLoadingMessage('Loading...'); // Display loading message
         console.log("Sent")
 
         const movieIds = list2.map((item) => item.movie_id);
@@ -84,25 +85,29 @@ function ImplicitMovieRecommend() {
         const postData = {
             movie_ids: movieIds,
         };
-        fetch('http://www.martinvolk.me:8080/api/recommend', {
+        setTimeout(() => {
+            fetch('http://www.martinvolk.me:8080/api/recommend', {
 //        fetch('http://localhost:5000/api/recommend', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(postData),
-        })
-            .then((response) => response.json())
-            .then((data) => {
-                console.log('API Response:', data);
-                setList3(data)
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(postData),
             })
-            .catch((error) => {
-                console.error('Error:', error);
-            });
-        setLoading(false);
-        setCrunchAgain(true)
-    };
+                .then((response) => response.json())
+                .then((data) => {
+                    console.log('API Response:', data);
+                    setList3(data)
+                })
+                .catch((error) => {
+                    console.error('Error:', error);
+                })
+                .finally(() => {
+                    setLoading(false);
+                    setLoadingMessage(''); // Clear loading message
+                });
+        }, 150);
+    }
 
     useEffect(() => {
         // Replace with the public S3 URL of your CSV file
@@ -234,8 +239,7 @@ function ImplicitMovieRecommend() {
                     </ListContainer>
                 </ListWrapper>
                 <CenteredButton variant="primary" onClick={sendSelection} disabled={loading}>
-                    {/*{loading ? 'Loading...' : 'Crunch'}*/}
-                    {loading ? 'Loading...' : crunchAgain ? 'Crunch Again' : 'Crunch'}
+                    {loading ? loadingMessage : 'Execute'}
                 </CenteredButton>
                 <ListWrapper>
                     <Title>
