@@ -62,7 +62,12 @@ function ImplicitMovieRecommend() {
         console.log(sourceList)
         if (sourceList === 'list1') {
             setList1(list1.filter((i) => i !== item)); // removes the item from list1
-            setList2([...list2, item]); // adds the item to list 2
+
+            // Find the movie object in list2 and get its rating
+            const existingMovie = list2.find((movie) => movie.movie_id === item.movie_id);
+            const rating = existingMovie ? existingMovie.rating : 0;
+
+            setList2([...list2, { ...item, rating }]); // adds the item to list 2
         } else if (sourceList === 'list2') {
             setList2(list2.filter((i) => i !== item));
             setList1([...list1, item]);
@@ -167,7 +172,7 @@ function ImplicitMovieRecommend() {
                             {filteredData
                                 .slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage)
                                 .map((row, index) => (
-                                    <MovieCard key={index} title={row.title}
+                                    <MovieCard key={index} title={row.title} rankStatus={"ranked"}
                                                onClick={() => handleTransfer(row, 'list1')}>
                                     </MovieCard>
                                 ))}
@@ -231,6 +236,8 @@ function ImplicitMovieRecommend() {
                                 <MovieCard
                                     key={item.movie_id} // Correctly uses a unique key prop
                                     title={item.title}
+                                    rankStatus={"ranked"}
+                                    initialRating={item.rating}
                                     onClick={() => handleTransfer(item, 'list2')}
                                 >
                                 </MovieCard>
