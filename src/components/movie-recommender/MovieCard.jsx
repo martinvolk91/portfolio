@@ -6,7 +6,7 @@ import {Card} from "react-bootstrap";
 
 const StyledMovieCard = styled.div`
   .card {
-    height: 65px;
+    height: 60px;
     color: ${({theme}) => theme.color};
     background: ${({theme}) => (theme.name === "light" ? "" : "#797B7B")};
     box-shadow: ${({theme}) =>
@@ -15,7 +15,7 @@ const StyledMovieCard = styled.div`
         : "0 3px 10px rgb(255 255 255 / 0.2)"};
 
     .card-title {
-      font-size: 1.2rem; // Adjust the font size here
+        font-size: 0.9rem; // Adjust the font size here
     }
 
     .card-link {
