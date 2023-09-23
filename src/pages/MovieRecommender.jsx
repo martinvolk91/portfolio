@@ -117,6 +117,21 @@ function ImplicitMovieRecommend() {
                     skipEmptyLines: true,
                     delimiter: "\t",
                     complete: (result) => {
+                        result.data.sort((a, b) => {
+                            const titleA = a.title.toUpperCase();
+                            const titleB = b.title.toUpperCase();
+
+                            // Compare titles, placing special characters and numbers at the end
+                            if (/^[^a-zA-Z]/.test(titleA) && /^[^a-zA-Z]/.test(titleB)) {
+                                return titleA.localeCompare(titleB);
+                            } else if (/^[^a-zA-Z]/.test(titleA)) {
+                                return 1;
+                            } else if (/^[^a-zA-Z]/.test(titleB)) {
+                                return -1;
+                            } else {
+                                return titleA.localeCompare(titleB);
+                            }
+                        });
                         setList1(result.data);
                     },
                 });
