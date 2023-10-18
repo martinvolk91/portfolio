@@ -5,11 +5,21 @@ import {Icon} from "@iconify/react";
 import Logo from "./images/logo.svg";
 
 // Hero Images (add your images to the /images directory with the same names)
-import HeroLight from "./images/hero-light.jpg";
-import HeroDark from "./images/hero-dark.jpg";
+//import HeroLight from "./images/hero-light.jpg";
+//import HeroDark from "./images/hero-dark.jpg";
+
+import BeachLight from "./images/beach-light.jpg";
+import ViennaDark from "./images/vienna-dark.jpg";
+
+import Movie from "./images/movie.jpg";
+
 // If you change the import names above then you need to change the export names below
-export {HeroLight as Light};
-export {HeroDark as Dark};
+//export {HeroLight as Light};
+//export {HeroDark as Dark};
+export {BeachLight as Light};
+export {ViennaDark as Dark};
+
+
 
 /* START HERE
  **************************************************************
@@ -33,8 +43,8 @@ export const moreInfo = (
         Hi! My name is Martin and I'm a data scientist. Over the past few years,
         I have been involved in the sports betting and gaming industry where I specialized in developing recommender
         systems and other personalization machine learning solutions. My passion is tackling challenging problems
-        across various domains e.g. science, computer science, economics, logistics, robotics, and more. <br/>
-        Visit <a href="#/My-Projects">My Projects</a> page if you want to check out some of my personal projects and
+        across various domains e.g. science, computer science, economics, logistics, robotics, games, and more. <br/>
+        Visit <a href="/My-Projects">My Projects</a> page if you want to check out some of my personal projects and
         demos or visit my Kaggle or GitHub profiles.
     </>
 )
@@ -81,13 +91,28 @@ export const skillData = [
     },
     {
         id: 8,
-        skill: <Icon icon="devicon-plain:django" className="display-4"/>,
-        name: "Django",
+        skill: <Icon icon="logos:kubernetes" className="display-4"/>,
+        name: "Kubernetes",
     },
     {
         id: 9,
         skill: <Icon icon="mdi:matrix" className="display-4"/>,
         name: "Recommender systems",
+    },
+    {
+        id: 10,
+        skill: <Icon icon="devicon:apachespark-wordmark" className="display-4"/>,
+        name: "Apache Spark",
+    },
+    {
+        id: 11,
+        skill: <Icon icon="devicon:apacheairflow-wordmark" className="display-4"/>,
+        name: "Apache Airflow",
+    },
+    {
+        id: 12,
+        skill: <Icon icon="mdi:aws" className="display-4"/>,
+        name: "AWS",
     },
 ];
 
@@ -110,7 +135,7 @@ export const projectCardImages = [
 
 export const projectData = [
     {
-        image: "",
+        image: Movie,
         name: 'Movie Recommender',
         description: "A movie recommender system based on the MovieLens 25M dataset.",
         homepage: "/MovieRecommender",

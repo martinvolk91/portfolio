@@ -14,7 +14,7 @@ export default function Skills() {
             <section className="section">
                 <Container className="text-center">
                     <Title>
-                        <h2>Skills</h2>
+                        <h2>Skills and Tech experience</h2>
                         <div className="underline"></div>
                     </Title>
                     <Row className="mt-3 align-items-center">

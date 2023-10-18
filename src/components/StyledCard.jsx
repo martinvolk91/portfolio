@@ -33,11 +33,15 @@ const StyledCardComponent = styled.div`
   }
 `;
 
+const StyledCardImage = styled(Card.Img)`
+  margin-top: 20px; /* Adjust the margin-top value as needed */
+`;
+
 export default function StyledCard({image, name, description, url, demo}) {
     return (
         <StyledCardComponent>
             <Card>
-                <Card.Img
+                <StyledCardImage
                     variant="top"
                     src={image ? image : GH}
                     alt={name}
@@ -53,12 +57,13 @@ export default function StyledCard({image, name, description, url, demo}) {
                         </Card.Link>
                     ) : null}
                 </Card.Body>
-                <Card.Footer className="text-center">
-                    <Card.Link href={url}>
-                        {"View on GitHub "}
-                        <Icon icon="icomoon-free:github"/>
-                    </Card.Link>
-                </Card.Footer>
+                {/*TODO: add footer that makes sense*/}
+                {/*<Card.Footer className="text-center">*/}
+                {/*    <Card.Link href={url}>*/}
+                {/*        {"View on GitHub "}*/}
+                {/*        <Icon icon="icomoon-free:github"/>*/}
+                {/*    </Card.Link>*/}
+                {/*</Card.Footer>*/}
             </Card>
         </StyledCardComponent>
     );
