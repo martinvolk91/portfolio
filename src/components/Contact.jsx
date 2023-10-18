@@ -17,7 +17,7 @@ export default function Contact() {
             <StyledSection className="d-flex flex-column justify-content-center">
                 <Container className="d-flex">
                     <Title>
-                        <h2>Contact Me</h2>
+                        <h2>Contact Me (work in progress)</h2>
                         <div className="underline"></div>
                     </Title>
                 </Container>

@@ -100,7 +100,8 @@ export default function ContactForm() {
                             size="lg"
                             variant={theme === "light" ? "outline-dark" : "outline-light"}
                             type="submit"
-                            disabled={isProcessing}
+//                            disabled={isProcessing}
+                            disabled={true}
                             className="my-4"
                         >
                             Submit{" "}
