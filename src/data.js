@@ -8,7 +8,7 @@ import Logo from "./images/logo.svg";
 //import HeroLight from "./images/hero-light.jpg";
 //import HeroDark from "./images/hero-dark.jpg";
 
-import BeachLight from "./images/beach-light.jpg";
+import ViennaLight from "./images/vienna-light.jpg";
 import ViennaDark from "./images/vienna-dark.jpg";
 
 import Movie from "./images/movie.jpg";
@@ -16,7 +16,7 @@ import Movie from "./images/movie.jpg";
 // If you change the import names above then you need to change the export names below
 //export {HeroLight as Light};
 //export {HeroDark as Dark};
-export {BeachLight as Light};
+export {ViennaLight as Light};
 export {ViennaDark as Dark};
 
 
