@@ -14,7 +14,7 @@ export default function ContactForm() {
     const {theme} = useAppContext();
 
     async function postData(data) {
-        const response = await fetch(formspreeUrl, {
+        const response = await fetch('http://www.martinvolk.me:8080/api/contact', {
             method: "POST",
             body: JSON.stringify(data),
             headers: {
@@ -100,8 +100,7 @@ export default function ContactForm() {
                             size="lg"
                             variant={theme === "light" ? "outline-dark" : "outline-light"}
                             type="submit"
-//                            disabled={isProcessing}
-                            disabled={true}
+                            disabled={isProcessing}
                             className="my-4"
                         >
                             Submit{" "}
